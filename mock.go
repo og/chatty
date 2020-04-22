@@ -12,15 +12,39 @@ import (
 const (
 	fnUUID = "UUID"
 	fnNameIncrID = "NameIncrID"
+	fnNameLetter = "Letter"
+	fnFirstName = "FirstName"
+	fnLastName = "LastName"
+	fnName = "Name"
+	fnFullName = "FullName"
+	fnCFirstName = "CFirstName"
+	fnCLastName = "CLastName"
+	fnCName = "CName"
 )
-func fillByFnName(fnName string, args []interface{}, value reflect.Value, valueType reflect.StructField) {
-	switch fnName {
+func fillByFnName(funcName string, args []interface{}, value reflect.Value, valueType reflect.StructField) {
+	switch funcName {
 	case fnUUID:
 		value.SetString(UUID())
-		break
 	case fnNameIncrID:
 		id := NameIncrID(reflect.ValueOf(args[0]).String())
 		value.SetString(id)
+	case fnNameLetter:
+		floatValue := reflect.ValueOf(args[0]).Float()
+		value.SetString(Letter(int(floatValue)))
+	case fnFirstName:
+		value.SetString(FirstName())
+	case fnLastName:
+		value.SetString(LastName())
+	case fnName:
+		value.SetString(Name())
+	case fnFullName:
+		value.SetString(FullName())
+	case fnCFirstName:
+		value.SetString(CFirstName())
+	case fnCLastName:
+		value.SetString(CLastName())
+	case fnCName:
+		value.SetString(CName())
 	default:
 		tag := mockTag + `:"` + valueType.Tag.Get(mockTag) + `"`
 
