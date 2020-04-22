@@ -28,7 +28,7 @@ func TestIncrID(t *testing.T) {
 	})
 	glist.Run(100, func(i int) (_break bool) {
 		id := i+1
-		is.Eql(string(id), userStringID.String())
+		is.Eql(gconv.IntString(id), userStringID.String())
 		return
 	})
 }
@@ -36,7 +36,7 @@ func TestNameIncrID(t *testing.T) {
 	is := gis.New(t)
 	glist.Run(100, func(i int) (_break bool) {
 		id := gconv.IntString(i+1)
-		is.Eql(id, cha.NameIncrID("user"))
+		is.Eql(id, cha.NameIncrID("34gv43g43gv"))
 		return
 	})
 }

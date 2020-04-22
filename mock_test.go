@@ -9,8 +9,8 @@ import (
 type User struct {
 	ID string `cha:"UUID()"`
 	Son struct{
-		ID string `cha:"NameIncrID(\"user\")"`
-		ID2 string `cha:"NameIncrID(\"user\")"`
+		ID string `cha:"NameIncrID(\"usersonid\")"`
+		ID2 string `cha:"NameIncrID(\"usersonid\")"`
 	}
 }
 type User2 struct {
@@ -22,8 +22,8 @@ type User2 struct {
 }
 func (user *User2) Chatty () {
 	user.ID = cha.UUID()
-	user.Son.ID = cha.NameIncrID("user")
-	user.Son.ID2 = cha.NameIncrID("user")
+	user.Son.ID = cha.NameIncrID("user2")
+	user.Son.ID2 = cha.NameIncrID("user2")
 }
 type User3 struct {
 	ID string
@@ -37,8 +37,8 @@ type User3Son struct {
 	ID2 string
 }
 func (son *User3Son) Chatty () {
-	son.ID = cha.NameIncrID("user")
-	son.ID2 = cha.NameIncrID("user")
+	son.ID = cha.NameIncrID("user3")
+	son.ID2 = cha.NameIncrID("user3")
 }
 func TestMock(t *testing.T) {
 	user := User{}
