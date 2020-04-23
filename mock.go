@@ -20,6 +20,9 @@ const (
 	fnCFirstName = "CFirstName"
 	fnCLastName = "CLastName"
 	fnCName = "CName"
+	fnInt = "Int"
+	fnBool = "Bool"
+	fnTrueLikelihood = "TrueLikelihood"
 )
 func fillByFnName(funcName string, args []interface{}, value reflect.Value, valueType reflect.StructField) {
 	switch funcName {
@@ -45,6 +48,15 @@ func fillByFnName(funcName string, args []interface{}, value reflect.Value, valu
 		value.SetString(CLastName())
 	case fnCName:
 		value.SetString(CName())
+	case fnInt:
+		min := int(reflect.ValueOf(args[0]).Float())
+		max := int(reflect.ValueOf(args[1]).Float())
+		value.SetInt(int64(Int(min, max)))
+	case fnBool:
+		value.SetBool(Bool())
+	case fnTrueLikelihood:
+		likelihood := int(reflect.ValueOf(args[0]).Float())
+		value.SetBool(TrueLikelihood(likelihood))
 	default:
 		tag := mockTag + `:"` + valueType.Tag.Get(mockTag) + `"`
 
