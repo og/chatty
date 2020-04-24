@@ -24,7 +24,7 @@ func TrueLikelihood(likelihood int) bool {
 	return bool(Int(1, 100) <= likelihood )
 }
 func randomBig(max int) *big.Int {
-	random, err := rand.Int(rand.Reader, big.NewInt(int64(max+1))) ; ge.Check(err)
+	random, err := rand.Int(rand.Reader, big.NewInt(int64(max))) ; ge.Check(err)
 	return random
 }
 func Int(min int, max int) int {
@@ -33,7 +33,7 @@ func Int(min int, max int) int {
 		WarningLog("Int(min int, max int) min can not greater than max")
 	}
 	if min == max { return max }
-	rangeValue := max - min
+	rangeValue := max - min + 1
 	random := randomBig(rangeValue)
 	return int(random.Int64()) + min
 	// min 6 max 6
