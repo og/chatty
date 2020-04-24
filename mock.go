@@ -100,7 +100,7 @@ func coreUnsafeMock(valuePtr reflect.Value) {
 func UnsafeMock(ptr interface{}) {
 	coreUnsafeMock(reflect.ValueOf(ptr))
 }
-type Data interface {
+type Dataer interface {
 	Chatty()
 }
 const mockDataChattyName = "Chatty"
@@ -124,7 +124,7 @@ func coreSafeMock(valuePtr reflect.Value) {
 		return
 	})
 }
-func Mock(data Data) {
+func Mock(data Dataer) {
 	value := reflect.ValueOf(data)
 	coreSafeMock(value)
 }
