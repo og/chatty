@@ -3,8 +3,10 @@ package cha_test
 import (
 	cha "github.com/og/go-chatty"
 	gconv "github.com/og/x/conv"
+	ge "github.com/og/x/error"
 	gis "github.com/og/x/test"
 	"log"
+	"regexp"
 	"testing"
 )
 
@@ -143,4 +145,28 @@ func TestTrueLikelihood(t *testing.T) {
 		})
 		coreTestBool(t, 40, trueCount, falseCount)
 	}
+}
+
+func TestLetter(t *testing.T) {
+	is := gis.New(t)
+	is.Eql(len(cha.Letter(10)), 10)
+	is.False(ge.Bool(regexp.MatchString(`[^a-z]`, cha.Letter(10000))))
+}
+func TestCapitalLetter(t *testing.T) {
+	is := gis.New(t)
+	is.Eql(len(cha.CapitalLetter(10)), 10)
+	is.False(ge.Bool(regexp.MatchString(`[^A-Z]`, cha.CapitalLetter(10000))))
+}
+type MockLetter struct {
+	Name string `cha:"Letter(10)"`
+	Title string `cha:"CapitalLetter(10)"`
+}
+func TestUnsafeMockLetter(t *testing.T) {
+	is := gis.New(t)
+	v := MockLetter{}
+	cha.UnsafeMock(&v)
+	is.Eql(len(v.Name), 10)
+	is.False(ge.Bool(regexp.MatchString(`[^a-z]`, v.Name)))
+	is.Eql(len(v.Title), 10)
+	is.False(ge.Bool(regexp.MatchString(`[^A-Z]`, v.Title)))
 }

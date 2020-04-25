@@ -12,7 +12,8 @@ import (
 const (
 	fnUUID = "UUID"
 	fnNameIncrID = "NameIncrID"
-	fnNameLetter = "Letter"
+	fnLetter = "Letter"
+	fnCapitalLetter = "CapitalLetter"
 	fnFirstName = "FirstName"
 	fnLastName = "LastName"
 	fnName = "Name"
@@ -31,9 +32,12 @@ func fillByFnName(funcName string, args []interface{}, value reflect.Value, valu
 	case fnNameIncrID:
 		id := NameIncrID(reflect.ValueOf(args[0]).String())
 		value.SetString(id)
-	case fnNameLetter:
+	case fnLetter:
 		floatValue := reflect.ValueOf(args[0]).Float()
 		value.SetString(Letter(int(floatValue)))
+	case fnCapitalLetter:
+		floatValue := reflect.ValueOf(args[0]).Float()
+		value.SetString(CapitalLetter(int(floatValue)))
 	case fnFirstName:
 		value.SetString(FirstName())
 	case fnLastName:

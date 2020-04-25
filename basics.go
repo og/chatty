@@ -3,6 +3,7 @@ package cha
 import (
 	"crypto/rand"
 	ge "github.com/og/x/error"
+	grand "github.com/og/x/rand"
 	"math/big"
 )
 
@@ -23,6 +24,18 @@ func TrueLikelihood(likelihood int) bool {
 	}
 	return bool(Int(1, 100) <= likelihood )
 }
+
+func String(min int, max int) string {
+	size := Int(min, max)
+	return grand.StringBySeed("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()[]",size)
+}
+func Letter(size int) string {
+	return grand.StringBySeed("abcdefghijklmnopqrstuvwxyz",size)
+}
+func CapitalLetter(size int) string {
+	return grand.StringBySeed("ABCDEFGHIJKLMNOPQRSTUVWXYZ",size)
+}
+
 func randomBig(max int) *big.Int {
 	random, err := rand.Int(rand.Reader, big.NewInt(int64(max+1))) ; ge.Check(err)
 	return random
