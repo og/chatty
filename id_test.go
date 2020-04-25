@@ -16,6 +16,15 @@ func TestUUID(t *testing.T) {
 		is.True(ge.Bool(regexp.MatchString("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}", cha.UUID())))
 		return
 	})
+	countMap := map[string]int{}
+	cha.Run(100, func(i int) (_break bool) {
+		countMap[cha.UUID()] = countMap[cha.UUID()] +1
+		if countMap[cha.UUID()] >1 {
+			t.Log("uuid repeat!")
+			t.Fail()
+		}
+		return
+	})
 }
 func TestIncrID(t *testing.T) {
 	is := gis.New(t)

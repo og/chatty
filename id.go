@@ -11,13 +11,13 @@ func UUID() string {
 }
 
 type incrementID struct {
-	Value int
+	value int
 	lock *sync.RWMutex
 }
 func (incrID *incrementID) Int() int {
-	value := incrID.Value
+	value := incrID.value
 	incrID.lock.Lock()
-	incrID.Value +=1
+	incrID.value +=1
 	incrID.lock.Unlock()
 	return value
 }
@@ -26,12 +26,12 @@ func (incrID *incrementID) String() string {
 }
 func IncrID() incrementID {
 	return incrementID{
-		Value: 1,
+		value: 1,
 		lock: new(sync.RWMutex),
 	}
 }
 var nameIncrIDMap = struct {
-	hash map[string/* mame */]*incrementID
+	hash map[string/* name */]*incrementID
 	lock *sync.RWMutex
 }{
 
