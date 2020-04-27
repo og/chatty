@@ -4,21 +4,21 @@ import (
 	cha "github.com/og/go-chatty"
 	gconv "github.com/og/x/conv"
 	ge "github.com/og/x/error"
-	gis "github.com/og/x/test"
+	"github.com/og/x/test"
 	"log"
 	"regexp"
 	"testing"
 )
 
 func coreTestInt(t *testing.T,min int, max int, rangeList []int) {
-	is:=gis.New(t)
+	as:=gtest.AS(t)
 	list := []int{}
 	cha.Run(1000, func(i int) (_break bool) {
 		list = append(list, cha.Int(min, max))
 		return
 	})
 	for _, item := range list {
-		is.True(item >=min && item <= max)
+		as.True(item >=min && item <= max)
 	}
 	for i:=0;i< len(rangeList);i++ {
 		number := rangeList[i]
@@ -40,7 +40,7 @@ func coreTestInt(t *testing.T,min int, max int, rangeList []int) {
 			Int int `cha:"Int(1,4)"`
 		}{}
 		cha.UnsafeMock(&v)
-		is.True(v.Int >=1  && v.Int <= 4)
+		as.True(v.Int >=1  && v.Int <= 4)
 	}
 }
 func TestInt(t *testing.T) {
@@ -56,8 +56,8 @@ func TestInt(t *testing.T) {
 	coreTestInt(t, 6, 6, []int{6})
 }
 func coreTestBool(t *testing.T, likelihood int, trueCount int,falseCount int) {
-	is := gis.New(t)
-	is.Eql(10000, trueCount + falseCount)
+	as := gtest.AS(t)
+	as.Eql(10000, trueCount + falseCount)
 	if trueCount < likelihood*100 && trueCount > likelihood*100 {
 		t.Log("trueCount", trueCount, " overflow normal range")
 		t.Fail()
@@ -65,7 +65,7 @@ func coreTestBool(t *testing.T, likelihood int, trueCount int,falseCount int) {
 
 }
 func TestBool(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	{
 		trueCount := 0
 		falseCount := 0
@@ -87,7 +87,7 @@ func TestBool(t *testing.T) {
 			}
 			return
 		})
-		is.True(hasTrue)
+		as.True(hasTrue)
 	}
 }
 func TestTrueLikelihood(t *testing.T) {
@@ -148,25 +148,38 @@ func TestTrueLikelihood(t *testing.T) {
 }
 
 func TestLetter(t *testing.T) {
-	is := gis.New(t)
-	is.Eql(len(cha.Letter(10)), 10)
-	is.False(ge.Bool(regexp.MatchString(`[^a-z]`, cha.Letter(10000))))
+	as := gtest.AS(t)
+	as.Eql(len(cha.Letter(10)), 10)
+	as.False(ge.Bool(regexp.MatchString(`[^a-z]`, cha.Letter(10000))))
 }
 func TestCapitalLetter(t *testing.T) {
-	is := gis.New(t)
-	is.Eql(len(cha.CapitalLetter(10)), 10)
-	is.False(ge.Bool(regexp.MatchString(`[^A-Z]`, cha.CapitalLetter(10000))))
+	as := gtest.AS(t)
+	as.Eql(len(cha.CapitalLetter(10)), 10)
+	as.False(ge.Bool(regexp.MatchString(`[^A-Z]`, cha.CapitalLetter(10000))))
 }
 type MockLetter struct {
 	Name string `cha:"Letter(10)"`
 	Title string `cha:"CapitalLetter(10)"`
 }
 func TestUnsafeMockLetter(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	v := MockLetter{}
 	cha.UnsafeMock(&v)
-	is.Eql(len(v.Name), 10)
-	is.False(ge.Bool(regexp.MatchString(`[^a-z]`, v.Name)))
-	is.Eql(len(v.Title), 10)
-	is.False(ge.Bool(regexp.MatchString(`[^A-Z]`, v.Title)))
+	as.Eql(len(v.Name), 10)
+	as.False(ge.Bool(regexp.MatchString(`[^a-z]`, v.Name)))
+	as.Eql(len(v.Title), 10)
+	as.False(ge.Bool(regexp.MatchString(`[^A-Z]`, v.Title)))
+}
+
+func TestString(t *testing.T) {
+	as := gtest.AS(t)
+	as.Run(100, func(i int) (_break bool) {
+		s := cha.String(1,5)
+		as.Range(len(s), 1, 5)
+		for i:=0;i<len(s);i++ {
+			v := s[i]
+			as.StringContains("abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789!@#$%^&*()[]",string(v))
+		}
+		return
+	})
 }

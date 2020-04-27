@@ -2,7 +2,7 @@ package cha_test
 
 import (
 	cha "github.com/og/go-chatty"
-	gis "github.com/og/x/test"
+	"github.com/og/x/test"
 	"testing"
 )
 
@@ -26,8 +26,29 @@ func (son *User3Son) Chatty () {
 func TestSafeMock3(t *testing.T) {
 	user := User3{}
 	cha.Mock(&user)
-	is := gis.New(t)
-	is.Eql(len(user.ID), 36)
-	is.Eql(user.Son.ID, "1")
-	is.Eql(user.Son.ID2, "2")
+	as := gtest.AS(t)
+	as.Eql(len(user.ID), 36)
+	as.Eql(user.Son.ID, "1")
+	as.Eql(user.Son.ID2, "2")
+}
+func TestUnsafeMock_panic(t *testing.T) {
+	as := gtest.AS(t)
+	as.Panic(func() {
+		type Fail struct {
+			Name string `cha:"dsfuskdafhdsf()"`
+		}
+		f := Fail{}
+		cha.UnsafeMock(&f)
+	})
+}
+func TestUnsafeMock_empty(t *testing.T) {
+	as := gtest.AS(t)
+	as.Panic(func() {
+		type Fail struct {
+			Name string `cha:""`
+			NoCha string
+		}
+		f := Fail{}
+		cha.UnsafeMock(&f)
+	})
 }

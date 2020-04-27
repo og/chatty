@@ -2,7 +2,7 @@ package cha
 
 import (
 	glist "github.com/og/x/list"
-	gis "github.com/og/x/test"
+	"github.com/og/x/test"
 	"strings"
 	"testing"
 )
@@ -47,52 +47,52 @@ func TestLastName(t *testing.T) {
 }
 
 func TestName(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	nameMap := map[string]int{}
 	glist.Run(100, func(i int) (_break bool) {
 		name := Name()
 		nameMap[name]++
 		return
 	})
-	is.True(len(nameMap)!=0)
+	as.True(len(nameMap)!=0)
 	for name, _:= range nameMap {
 		names := strings.Split(name, " ")
 		firstName := names[0]
 		lastName := names[1]
-		is.True(glist.StringList{seed.FirstName}.In(firstName))
-		is.True(glist.StringList{seed.LastName}.In(lastName))
+		as.True(glist.StringList{seed.FirstName}.In(firstName))
+		as.True(glist.StringList{seed.LastName}.In(lastName))
 	}
 }
 
 func TestCName(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	nameMap := map[string]int{}
 	glist.Run(100, func(i int) (_break bool) {
 		name := CName()
 		nameMap[name]++
 		return
 	})
-	is.True(len(nameMap)!=0)
-	is.True(len(nameMap) > 10)
+	as.True(len(nameMap)!=0)
+	as.True(len(nameMap) > 10)
 }
 
 func TestFullName(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	nameMap := map[string]int{}
 	glist.Run(100, func(i int) (_break bool) {
 		name := FullName()
 		nameMap[name]++
 		return
 	})
-	is.True(len(nameMap)!=0)
+	as.True(len(nameMap)!=0)
 	for name, _:= range nameMap {
 		names := strings.Split(name, " ")
 		firstName := names[0]
 		middleName := names[1]
 		lastName := names[2]
-		is.True(glist.StringList{seed.FirstName}.In(firstName))
-		is.True(glist.StringList{seed.MiddleName}.In(middleName))
-		is.True(glist.StringList{seed.LastName}.In(lastName))
+		as.True(glist.StringList{seed.FirstName}.In(firstName))
+		as.True(glist.StringList{seed.MiddleName}.In(middleName))
+		as.True(glist.StringList{seed.LastName}.In(lastName))
 	}
 }
 
@@ -106,30 +106,30 @@ type mockNames struct {
 	CName string `cha:"CName()"`
 }
 func TestUnsafeMockNames(t *testing.T) {
-	is := gis.New(t)
+	as := gtest.AS(t)
 	glist.Run(100, func(i int) (_break bool) {
 		v := mockNames{}
 		UnsafeMock(&v)
-		is.True(glist.StringList{seed.FirstName}.In(v.FirstName))
-		is.True(glist.StringList{seed.LastName}.In(v.LastName))
-		is.True(glist.StringList{seed.ChineseFirstName}.In(v.CFirstName))
-		is.True(glist.StringList{seed.ChineseLastName}.In(v.CLastName))
+		as.True(glist.StringList{seed.FirstName}.In(v.FirstName))
+		as.True(glist.StringList{seed.LastName}.In(v.LastName))
+		as.True(glist.StringList{seed.ChineseFirstName}.In(v.CFirstName))
+		as.True(glist.StringList{seed.ChineseLastName}.In(v.CLastName))
 		{
 			names := strings.Split(v.Name, " ")
-			is.True(glist.StringList{seed.FirstName}.In(names[0]))
-			is.True(glist.StringList{seed.LastName}.In(names[1]))
+			as.True(glist.StringList{seed.FirstName}.In(names[0]))
+			as.True(glist.StringList{seed.LastName}.In(names[1]))
 		}
 		{
 			names := strings.Split(v.FullName, " ")
-			is.True(glist.StringList{seed.FirstName}.In(names[0]))
-			is.True(glist.StringList{seed.MiddleName}.In(names[1]))
-			is.True(glist.StringList{seed.LastName}.In(names[2]))
+			as.True(glist.StringList{seed.FirstName}.In(names[0]))
+			as.True(glist.StringList{seed.MiddleName}.In(names[1]))
+			as.True(glist.StringList{seed.LastName}.In(names[2]))
 		}
 		{
-			is.True(len(v.CName) > 2)
+			as.True(len(v.CName) > 2)
 		}
 		return
 	})
-	// is.Eql()
+	// as.Eql()
 
 }

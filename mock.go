@@ -9,62 +9,80 @@ import (
 	"regexp"
 	"strings"
 )
-const (
-	fnUUID = "UUID"
-	fnNameIncrID = "NameIncrID"
-	fnLetter = "Letter"
-	fnCapitalLetter = "CapitalLetter"
-	fnFirstName = "FirstName"
-	fnLastName = "LastName"
-	fnName = "Name"
-	fnFullName = "FullName"
-	fnCFirstName = "CFirstName"
-	fnCLastName = "CLastName"
-	fnCName = "CName"
-	fnInt = "Int"
-	fnBool = "Bool"
-	fnTrueLikelihood = "TrueLikelihood"
-)
+func dict () (dict struct{
+	FN struct{
+		UUID string
+		NameIncrID  string
+		Letter string
+		CapitalLetter string
+		FirstName string
+		LastName string
+		Name string
+		FullName string
+		CFirstName string
+		CLastName string
+		CName string
+		Int string
+		Bool string
+		TrueLikelihood string
+	}
+}) {
+	dict.FN.UUID = "UUID"
+	dict.FN.NameIncrID = "NameIncrID"
+	dict.FN.Letter = "Letter"
+	dict.FN.CapitalLetter = "CapitalLetter"
+	dict.FN.FirstName = "FirstName"
+	dict.FN.LastName = "LastName"
+	dict.FN.Name = "Name"
+	dict.FN.FullName = "FullName"
+	dict.FN.CFirstName = "CFirstName"
+	dict.FN.CLastName = "CLastName"
+	dict.FN.CName = "CName"
+	dict.FN.Int = "Int"
+	dict.FN.Bool = "Bool"
+	dict.FN.TrueLikelihood = "TrueLikelihood"
+	return
+}
+
 func fillByFnName(funcName string, args []interface{}, value reflect.Value, valueType reflect.StructField) {
 	switch funcName {
-	case fnUUID:
+	case dict().FN.UUID:
 		value.SetString(UUID())
-	case fnNameIncrID:
+	case dict().FN.NameIncrID:
 		id := NameIncrID(reflect.ValueOf(args[0]).String())
 		value.SetString(id)
-	case fnLetter:
+	case dict().FN.Letter:
 		floatValue := reflect.ValueOf(args[0]).Float()
 		value.SetString(Letter(int(floatValue)))
-	case fnCapitalLetter:
+	case dict().FN.CapitalLetter:
 		floatValue := reflect.ValueOf(args[0]).Float()
 		value.SetString(CapitalLetter(int(floatValue)))
-	case fnFirstName:
+	case dict().FN.FirstName:
 		value.SetString(FirstName())
-	case fnLastName:
+	case dict().FN.LastName:
 		value.SetString(LastName())
-	case fnName:
+	case dict().FN.Name:
 		value.SetString(Name())
-	case fnFullName:
+	case dict().FN.FullName:
 		value.SetString(FullName())
-	case fnCFirstName:
+	case dict().FN.CFirstName:
 		value.SetString(CFirstName())
-	case fnCLastName:
+	case dict().FN.CLastName:
 		value.SetString(CLastName())
-	case fnCName:
+	case dict().FN.CName:
 		value.SetString(CName())
-	case fnInt:
+	case dict().FN.Int:
 		min := int(reflect.ValueOf(args[0]).Float())
 		max := int(reflect.ValueOf(args[1]).Float())
 		value.SetInt(int64(Int(min, max)))
-	case fnBool:
+	case dict().FN.Bool:
 		value.SetBool(Bool())
-	case fnTrueLikelihood:
+	case dict().FN.TrueLikelihood:
 		likelihood := int(reflect.ValueOf(args[0]).Float())
 		value.SetBool(TrueLikelihood(likelihood))
 	default:
 		tag := mockTag + `:"` + valueType.Tag.Get(mockTag) + `"`
-
-		panic(errors.New("chatty: "+ tag + "\r\n" + fnName + " can not found"))
+		panic(errors.New("chatty: "+ tag + "\r\n" + funcName + " can not found"))
 	}
 }
 const mockTag = "cha"
@@ -81,6 +99,9 @@ func coreUnsafeMock(valuePtr reflect.Value) {
 		}
 		if !has { return }
 		fnCall := strings.Split(tag, "()")
+		if tag == "" {
+			fnCall = []string{}
+		}
 		switch len(fnCall) {
 		case 1:
 			fnName := strings.Split(tag, "(")[0]

@@ -3,7 +3,7 @@ package cha_test
 import (
 	cha "github.com/og/go-chatty"
 	glist "github.com/og/x/list"
-	gis "github.com/og/x/test"
+	 "github.com/og/x/test"
 	"testing"
 )
 
@@ -45,7 +45,7 @@ func TestRun(t *testing.T) {
 			}
 			return
 		})
-		gis.New(t).Eql(data, []int{0,1,2,3,4,5})
+		gtest.AS(t).Eql(data, []int{0,1,2,3,4,5})
 	}
 	{
 		data := []int{}
@@ -53,6 +53,6 @@ func TestRun(t *testing.T) {
 			data = append(data, i)
 			return
 		})
-		gis.New(t).Eql(data, []int{0,1,2,3,4,5,6,7,8,9})
+		gtest.AS(t).Eql(data, []int{0,1,2,3,4,5,6,7,8,9})
 	}
 }
