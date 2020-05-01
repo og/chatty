@@ -11,7 +11,7 @@ import (
 )
 
 func coreTestInt(t *testing.T,min int, max int, rangeList []int) {
-	as:=gtest.AS(t)
+	as:=gtest.NewAS(t)
 	list := []int{}
 	cha.Run(1000, func(i int) (_break bool) {
 		list = append(list, cha.Int(min, max))
@@ -56,8 +56,8 @@ func TestInt(t *testing.T) {
 	coreTestInt(t, 6, 6, []int{6})
 }
 func coreTestBool(t *testing.T, likelihood int, trueCount int,falseCount int) {
-	as := gtest.AS(t)
-	as.Eql(10000, trueCount + falseCount)
+	as := gtest.NewAS(t)
+	as.Equal(10000, trueCount + falseCount)
 	if trueCount < likelihood*100 && trueCount > likelihood*100 {
 		t.Log("trueCount", trueCount, " overflow normal range")
 		t.Fail()
@@ -65,7 +65,7 @@ func coreTestBool(t *testing.T, likelihood int, trueCount int,falseCount int) {
 
 }
 func TestBool(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	{
 		trueCount := 0
 		falseCount := 0
@@ -148,13 +148,13 @@ func TestTrueLikelihood(t *testing.T) {
 }
 
 func TestLetter(t *testing.T) {
-	as := gtest.AS(t)
-	as.Eql(len(cha.Letter(10)), 10)
+	as := gtest.NewAS(t)
+	as.Equal(len(cha.Letter(10)), 10)
 	as.False(ge.Bool(regexp.MatchString(`[^a-z]`, cha.Letter(10000))))
 }
 func TestCapitalLetter(t *testing.T) {
-	as := gtest.AS(t)
-	as.Eql(len(cha.CapitalLetter(10)), 10)
+	as := gtest.NewAS(t)
+	as.Equal(len(cha.CapitalLetter(10)), 10)
 	as.False(ge.Bool(regexp.MatchString(`[^A-Z]`, cha.CapitalLetter(10000))))
 }
 type MockLetter struct {
@@ -162,17 +162,17 @@ type MockLetter struct {
 	Title string `cha:"CapitalLetter(10)"`
 }
 func TestUnsafeMockLetter(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	v := MockLetter{}
 	cha.UnsafeMock(&v)
-	as.Eql(len(v.Name), 10)
+	as.Equal(len(v.Name), 10)
 	as.False(ge.Bool(regexp.MatchString(`[^a-z]`, v.Name)))
-	as.Eql(len(v.Title), 10)
+	as.Equal(len(v.Title), 10)
 	as.False(ge.Bool(regexp.MatchString(`[^A-Z]`, v.Title)))
 }
 
 func TestString(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	as.Run(100, func(i int) (_break bool) {
 		s := cha.String(1,5)
 		as.Range(len(s), 1, 5)

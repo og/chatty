@@ -26,13 +26,13 @@ func (son *User3Son) Chatty () {
 func TestSafeMock3(t *testing.T) {
 	user := User3{}
 	cha.Mock(&user)
-	as := gtest.AS(t)
-	as.Eql(len(user.ID), 36)
-	as.Eql(user.Son.ID, "1")
-	as.Eql(user.Son.ID2, "2")
+	as := gtest.NewAS(t)
+	as.Equal(len(user.ID), 36)
+	as.Equal(user.Son.ID, "1")
+	as.Equal(user.Son.ID2, "2")
 }
 func TestUnsafeMock_panic(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	as.Panic(func() {
 		type Fail struct {
 			Name string `cha:"dsfuskdafhdsf()"`
@@ -42,7 +42,7 @@ func TestUnsafeMock_panic(t *testing.T) {
 	})
 }
 func TestUnsafeMock_empty(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	as.Panic(func() {
 		type Fail struct {
 			Name string `cha:""`

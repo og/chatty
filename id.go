@@ -53,3 +53,9 @@ func NameIncrID(name string) string {
 	}
 	return incrID.String()
 }
+type Model interface {
+	TableName () string
+}
+func DBIncrID (model Model) string {
+	return NameIncrID(model.TableName())
+}

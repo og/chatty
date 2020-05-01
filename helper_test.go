@@ -2,8 +2,7 @@ package cha_test
 
 import (
 	cha "github.com/og/go-chatty"
-	glist "github.com/og/x/list"
-	 "github.com/og/x/test"
+	"github.com/og/x/test"
 	"testing"
 )
 
@@ -11,7 +10,7 @@ func TestPickString(t *testing.T) {
 	list := []string{"abc", "efg"}
 	oneCount := 0
 	twoCount := 0
-	glist.Run(100, func(i int) (_break bool) {
+	cha.Run(100, func(i int) (_break bool) {
 		s := cha.PickString(list)
 		if s == "abc" {
 			oneCount++
@@ -45,7 +44,7 @@ func TestRun(t *testing.T) {
 			}
 			return
 		})
-		gtest.AS(t).Eql(data, []int{0,1,2,3,4,5})
+		gtest.NewAS(t).Equal(data, []int{0,1,2,3,4,5})
 	}
 	{
 		data := []int{}
@@ -53,6 +52,6 @@ func TestRun(t *testing.T) {
 			data = append(data, i)
 			return
 		})
-		gtest.AS(t).Eql(data, []int{0,1,2,3,4,5,6,7,8,9})
+		gtest.NewAS(t).Equal(data, []int{0,1,2,3,4,5,6,7,8,9})
 	}
 }

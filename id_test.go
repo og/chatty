@@ -4,15 +4,14 @@ import (
 	"github.com/og/go-chatty"
 	gconv "github.com/og/x/conv"
 	ge "github.com/og/x/error"
-	glist "github.com/og/x/list"
-	 "github.com/og/x/test"
+	"github.com/og/x/test"
 	"regexp"
 	"testing"
 )
 func TestUUID(t *testing.T) {
-	as := gtest.AS(t)
-	glist.Run(100, func(i int) (_break bool) {
-		as.Eql(len(cha.UUID()), 36)
+	as := gtest.NewAS(t)
+	cha.Run(100, func(i int) (_break bool) {
+		as.Equal(len(cha.UUID()), 36)
 		as.True(ge.Bool(regexp.MatchString("[a-z0-9]{8}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{4}-[a-z0-9]{12}", cha.UUID())))
 		return
 	})
@@ -27,25 +26,25 @@ func TestUUID(t *testing.T) {
 	})
 }
 func TestIncrID(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	userIncrID := cha.IncrID()
 	userStringID := cha.IncrID()
-	glist.Run(100, func(i int) (_break bool) {
+	cha.Run(100, func(i int) (_break bool) {
 		id := i+1
-		as.Eql(id, userIncrID.Int())
+		as.Equal(id, userIncrID.Int())
 		return
 	})
-	glist.Run(100, func(i int) (_break bool) {
+	cha.Run(100, func(i int) (_break bool) {
 		id := i+1
-		as.Eql(gconv.IntString(id), userStringID.String())
+		as.Equal(gconv.IntString(id), userStringID.String())
 		return
 	})
 }
 func TestNameIncrID(t *testing.T) {
-	as := gtest.AS(t)
-	glist.Run(100, func(i int) (_break bool) {
+	as := gtest.NewAS(t)
+	cha.Run(100, func(i int) (_break bool) {
 		id := gconv.IntString(i+1)
-		as.Eql(id, cha.NameIncrID("34gv43g43gv"))
+		as.Equal(id, cha.NameIncrID("34gv43g43gv"))
 		return
 	})
 }
@@ -74,16 +73,29 @@ func (user *User2) Chatty () {
 func TestMock(t *testing.T) {
 	user := User{}
 	cha.UnsafeMock(&user)
-	as := gtest.AS(t)
-	as.Eql(len(user.ID), 36)
-	as.Eql(user.Son.ID, "1")
-	as.Eql(user.Son.ID2, "2")
+	as := gtest.NewAS(t)
+	as.Equal(len(user.ID), 36)
+	as.Equal(user.Son.ID, "1")
+	as.Equal(user.Son.ID2, "2")
 }
 func TestSafeMock(t *testing.T) {
 	user := User2{}
 	cha.Mock(&user)
-	as := gtest.AS(t)
-	as.Eql(len(user.ID), 36)
-	as.Eql(user.Son.ID, "1")
-	as.Eql(user.Son.ID2, "2")
+	as := gtest.NewAS(t)
+	as.Equal(len(user.ID), 36)
+	as.Equal(user.Son.ID, "1")
+	as.Equal(user.Son.ID2, "2")
+}
+type Book struct {
+	ID string
+}
+func (Book) TableName() string { return "book"}
+func TestDBIncrID(t *testing.T) {
+	book := Book{}
+	as := gtest.NewAS(t)
+	cha.Run(100, func(i int) (_break bool) {
+		id := gconv.IntString(i+1)
+		as.Equal(id, cha.DBIncrID(book))
+		return
+	})
 }

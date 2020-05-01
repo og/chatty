@@ -12,6 +12,8 @@ github.com/og/x v0.0.0-20200419151022-88650632ae1c h1:4dAU1k6jllSOuUmIEIvGO2MLw8
 github.com/og/x v0.0.0-20200419151022-88650632ae1c/go.mod h1:FCkdxiGT08CmLFFLnZhFhsgPBBkv4lQ1lU7XyzTunQg=
 github.com/og/x v0.0.0-20200426063014-797cfe3a18e5 h1:tnWTQKqDgqnI53RU9x4bvSeVgQg8qTZ5c+G1dkmk/DA=
 github.com/og/x v0.0.0-20200426063014-797cfe3a18e5/go.mod h1:FCkdxiGT08CmLFFLnZhFhsgPBBkv4lQ1lU7XyzTunQg=
+github.com/og/x v0.0.0-20200428040727-f07da28be449 h1:nI/mSy6hQJULEaXfwr3cENjYdj/8nhDzn3qSDtLrF/o=
+github.com/og/x v0.0.0-20200428040727-f07da28be449/go.mod h1:FCkdxiGT08CmLFFLnZhFhsgPBBkv4lQ1lU7XyzTunQg=
 github.com/og/x/json v0.0.0-20190911074324-46c1b3e856fb/go.mod h1:bZrrjE/DSoVtxVFWtDHU1BD82zwiheYZSSjCFWHEm70=
 github.com/og/x/json v0.0.0-20200328105910-6c65c720db7e h1:AOAgJN6pLHk0RAPnn2wXh/WMKubF8bFlIGmRVqdWRCs=
 github.com/og/x/json v0.0.0-20200328105910-6c65c720db7e/go.mod h1:gcYUIgxOtIITHViuIilfUch7h7Stzt2+4J1neXDhDto=

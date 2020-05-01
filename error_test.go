@@ -6,5 +6,5 @@ import (
 )
 
 func TestNewError(t *testing.T) {
-	gtest.AS(t).EqualError(newError("abc"), "go-chatty: abc")
+	gtest.NewAS(t).ErrorString(newError("abc"), "go-chatty: abc")
 }

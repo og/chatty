@@ -9,7 +9,7 @@ import (
 
 func TestCFirstName(t *testing.T) {
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := CFirstName()
 		nameMap[name]++
 		return
@@ -18,7 +18,7 @@ func TestCFirstName(t *testing.T) {
 }
 func TestFirstName(t *testing.T) {
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := FirstName()
 		nameMap[name]++
 		return
@@ -28,7 +28,7 @@ func TestFirstName(t *testing.T) {
 
 func TestCLastName(t *testing.T) {
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := CLastName()
 		nameMap[name]++
 		return
@@ -38,7 +38,7 @@ func TestCLastName(t *testing.T) {
 
 func TestLastName(t *testing.T) {
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := LastName()
 		nameMap[name]++
 		return
@@ -47,9 +47,9 @@ func TestLastName(t *testing.T) {
 }
 
 func TestName(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := Name()
 		nameMap[name]++
 		return
@@ -65,9 +65,9 @@ func TestName(t *testing.T) {
 }
 
 func TestCName(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := CName()
 		nameMap[name]++
 		return
@@ -77,9 +77,9 @@ func TestCName(t *testing.T) {
 }
 
 func TestFullName(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	nameMap := map[string]int{}
-	glist.Run(100, func(i int) (_break bool) {
+	Run(100, func(i int) (_break bool) {
 		name := FullName()
 		nameMap[name]++
 		return
@@ -106,8 +106,8 @@ type mockNames struct {
 	CName string `cha:"CName()"`
 }
 func TestUnsafeMockNames(t *testing.T) {
-	as := gtest.AS(t)
-	glist.Run(100, func(i int) (_break bool) {
+	as := gtest.NewAS(t)
+	Run(100, func(i int) (_break bool) {
 		v := mockNames{}
 		UnsafeMock(&v)
 		as.True(glist.StringList{seed.FirstName}.In(v.FirstName))
@@ -130,6 +130,6 @@ func TestUnsafeMockNames(t *testing.T) {
 		}
 		return
 	})
-	// as.Eql()
+	// as.Equal()
 
 }

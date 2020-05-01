@@ -7,12 +7,12 @@ import (
 )
 
 func TestWarningLog(t *testing.T) {
-	as := gtest.AS(t)
+	as := gtest.NewAS(t)
 	shouldMsg := ""
 	cha.WarningLog("some")
 	cha.WarningLog = func(msg string) {
 		shouldMsg = msg
 	}
 	cha.WarningLog("a")
-	as.Eql(shouldMsg, "a")
+	as.Equal(shouldMsg, "a")
 }

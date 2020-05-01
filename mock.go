@@ -3,7 +3,6 @@ package cha
 import (
 	ge "github.com/og/x/error"
 	gjson "github.com/og/x/json"
-	glist "github.com/og/x/list"
 	"github.com/pkg/errors"
 	"reflect"
 	"regexp"
@@ -89,7 +88,7 @@ const mockTag = "cha"
 func coreUnsafeMock(valuePtr reflect.Value) {
 	value := valuePtr.Elem()
 	valueType := value.Type()
-	glist.Run(valueType.NumField(), func(typeIndex int) (_break bool) {
+	Run(valueType.NumField(), func(typeIndex int) (_break bool) {
 		fieldValue := value.Field(typeIndex)
 		fieldType := valueType.Field(typeIndex)
 		tag, has := fieldType.Tag.Lookup(mockTag)
@@ -133,14 +132,14 @@ func coreSafeMock(valuePtr reflect.Value) {
 	value := valuePtr.Elem()
 	valuePtrType := valuePtr.Type()
 	valueType := value.Type()
-	glist.Run(valuePtrType.NumMethod(), func(i int) (_break bool) {
+	Run(valuePtrType.NumMethod(), func(i int) (_break bool) {
 			method := valuePtrType.Method(i)
 			if method.Name == mockDataChattyName {
 				method.Func.Call([]reflect.Value{valuePtr})
 			}
 			return
 	})
-	glist.Run(valueType.NumField(), func(typeIndex int) (_break bool) {
+	Run(valueType.NumField(), func(typeIndex int) (_break bool) {
 		fieldValue := value.Field(typeIndex)
 		if fieldValue.Kind() == reflect.Struct {
 			coreSafeMock(fieldValue.Addr())
